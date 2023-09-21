@@ -93,53 +93,55 @@ const CreatePost = () => {
   };
   return (
     <div>
-      <div className=" border-2 border-purple-900 max-w-lg bg-[#E9E4F0]">
-        <form onSubmit={submitPost} className=" flex flex-col gap-2 p-4">
-          <input
-            className="border-2 p-2 text-lg outline-none"
-            type="text"
-            required
-            placeholder="Title of the post"
-            minLength={3}
-            maxLength={70}
-            ref={titleInput}
-          />
-          <textarea
-            type="text"
-            required
-            placeholder="What's in your mind!"
-            minLength={3}
-            ref={bodyInput}
-            rows="3"
-            className="border-2 p-2 text-lg outline-none "
-          ></textarea>
-          <button
-            type="submit"
-            className="border-2 border-white text-[1.1rem] text-white font-medium w-44 p-3 rounded-xl hover:text-black hover:bg-white transition-all"
+      <div className="flex flex-col-reverse md:flex-row md:justify-between md:items-start gap-y-6">
+        <div className=" border-2 max-w-lg md:w-[450px]">
+          <form onSubmit={submitPost} className=" flex flex-col gap-2 p-4">
+            <input
+              className="border-2 p-2 text-lg outline-none"
+              type="text"
+              required
+              placeholder="Title of the post"
+              minLength={3}
+              maxLength={70}
+              ref={titleInput}
+            />
+            <textarea
+              type="text"
+              required
+              placeholder="What's in your mind!"
+              minLength={3}
+              ref={bodyInput}
+              rows="3"
+              className="border-2 p-2 text-lg outline-none "
+            ></textarea>
+            <button
+              type="submit"
+              className="border-2 border-white text-[1.1rem] text-white font-medium w-44 p-3 rounded-xl hover:text-black hover:bg-white transition-all"
+            >
+              Publish
+            </button>
+          </form>
+        </div>
+        <div className=" lg:mr-12">
+          <form
+            className="flex items-center border-2 border-white bg-white w-[300px] px-2 max-[470px]:w-full"
+            onSubmit={searchHandler}
           >
-            Publish
-          </button>
-        </form>
-      </div>
-      <div className=" lg:mr-12">
-        <form
-          className="flex items-center border-2 border-blue-600 bg-white w-[300px] px-2 max-[470px]:w-full"
-          onSubmit={searchHandler}
-        >
-          <input
-            type="search"
-            ref={searchRef}
-            placeholder="Search"
-            className=" px-4 py-2 text-xl bg-transparent w-full outline-none"
-          />
-          <button
-            type="submit"
-            className=" text-blue-500 text-2xl flex items-center"
-          >
-            {/* <SearchOutlined /> */}
-            Search
-          </button>
-        </form>
+            <input
+              type="search"
+              ref={searchRef}
+              placeholder="Search"
+              className=" px-4 py-2 text-xl bg-transparent w-full outline-none"
+            />
+            <button
+              type="submit"
+              className=" text-blue-500 text-2xl flex items-center"
+            >
+              {/* <SearchOutlined /> */}
+              <i className="bi bi-search"></i>
+            </button>
+          </form>
+        </div>
       </div>
 
       {allPosts?.map((eachPost, index) => {
