@@ -12,8 +12,8 @@ const Post = ({ eachPost, deleteHandle, editPost, index }) => {
     setOpen(true);
   };
   return (
-    <div className=" my-4 max-w-[620px] shadow-lg">
-      <div className=" border-2 p-3">
+    <div className=" my-4 max-w-[620px] shadow-xl">
+      <div className=" border-2 p-3 bg-white">
         <h2 className=" text-3xl font-medium">{eachPost.title}</h2>
         <p className=" text-lg my-3">{eachPost.text}</p>
         <div className=" flex gap-x-5">

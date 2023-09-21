@@ -1,9 +1,11 @@
 import React from "react";
 import CreatePost from "./components/CreatePost";
+import Bar from "./components/Bar";
 
 const App = () => {
   return (
-    <div className=" p-2 min-h-screen bg-gradient-to-tr from-[#D3CCE3] to-[#E9E4F0]">
+    <div className=" p-2 min-h-screen bg-gradient-to-br from-[#ffb347] to-[#ffcc33]">
+      <Bar />
       <CreatePost />
     </div>
   );
