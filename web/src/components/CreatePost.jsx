@@ -55,7 +55,7 @@ const CreatePost = () => {
   };
   const deleteHandle = async (id) => {
     try {
-      const response = await axios.delete(`api/v1/post/${id}`);
+      const response = await axios.delete(`${baseURL}api/v1/post/${id}`);
       console.log(response.data);
       setConfirmLoading(true);
       message.success(`${response.data}`);
@@ -80,7 +80,7 @@ const CreatePost = () => {
     const text = e.target.parentElement.previousElementSibling.lastChild.value;
 
     try {
-      const response = await axios.put(`api/v1/post/${id}`, {
+      const response = await axios.put(`${baseURL}api/v1/post/${id}`, {
         title: title,
         text: text,
       });

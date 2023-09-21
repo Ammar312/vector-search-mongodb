@@ -1,6 +1,6 @@
 import express from "express";
 import { nanoid } from "nanoid";
-import { client } from "../mongodb.mjs";
+import { client, openai } from "../mongodb.mjs";
 import { ObjectId } from "mongodb";
 
 const router = express.Router();
@@ -86,6 +86,56 @@ router.delete("/post/:postId", async (req, res, next) => {
     res.send("Post Deleted Successfully");
   } catch (error) {
     res.status(404).send("Not Found");
+  }
+});
+
+router.get("/search", async (req, res) => {
+  try {
+    const response = await openai.embeddings.create({
+      model: "text-embedding-ada-002",
+      input: req.query.q,
+    });
+    const vector = response?.data[0]?.embedding;
+    console.log("vector: ", vector);
+    // [ 0.0023063174, -0.009358601, 0.01578391, ... , 0.01678391, ]
+
+    // Query for similar documents.
+    const documents = await dbCollection
+      .aggregate([
+        {
+          $search: {
+            index: "default",
+            knnBeta: {
+              vector: vector,
+              path: "embedding",
+              k: 10, // number of documents
+            },
+            scoreDetails: true,
+          },
+        },
+        {
+          $project: {
+            embedding: 0,
+            score: { $meta: "searchScore" },
+            scoreDetails: { $meta: "searchScoreDetails" },
+          },
+        },
+      ])
+      .toArray();
+
+    // documents.map((eachMatch) => {
+    //   console.log(
+    //     `score ${eachMatch?.score?.toFixed(3)} => ${JSON.stringify(
+    //       eachMatch
+    //     )}\n\n`
+    //   );
+    // });
+    console.log(`${documents.length} records found `);
+
+    res.send(documents);
+  } catch (e) {
+    console.log("error getting data mongodb: ", e);
+    res.status(500).send("server error, please try later");
   }
 });
 

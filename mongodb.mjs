@@ -1,4 +1,5 @@
 import { MongoClient } from "mongodb";
+import OpenAI from "openai";
 const uri =
   "mongodb+srv://db123:beta%4012345@cluster0.4vcwf6g.mongodb.net/?retryWrites=true&w=majority";
 
@@ -19,4 +20,8 @@ process.on("SIGINT", async function () {
   console.log("app is terminating");
   await client.close();
   process.exit(0);
+});
+
+export const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
 });
